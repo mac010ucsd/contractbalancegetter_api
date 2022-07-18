@@ -5,17 +5,18 @@ const contractAbiJson = require('../contractabi.json');
 
 @Injectable()
 export class AppService {
+  provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+
   getHello(): string {
     return 'Hello World!';
   }
   async getUserBalance(pKey: string, dest: string): Promise<string> {
     // provider
-    const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
 
     // a signer (wallet)
     //let mywallet = ethers.Wallet.createRandom();
     let mywallet = new ethers.Wallet(pKey);
-    mywallet = mywallet.connect(provider);
+    mywallet = mywallet.connect(this.provider);
 
     // a contract
     const contractAddress = "0x715696b3AEA58920E1F5A4cF161e843405D2d384";
